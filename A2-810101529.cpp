@@ -4,7 +4,11 @@
 #include <vector>
 #include <fstream>
 #include <algorithm> 
+
 using namespace std;
+// const string parkingFileName = "Parking.csv";
+// const string carsFileName = "Cars.csv";
+// const string priceFileName = "Price.csv";
 const string CMD_request_spot = "request_spot";
 const string CMD_assign_spot = "assign_spot";
 const string CMD_report_parking = "report_parking";
@@ -16,6 +20,8 @@ const int coveredParkingOverPriceConst = 50;
 const int CCTVParkingOverPriceConst = 80;
 const int coveredParkingOverPriceDaily = 30;
 const int CCTVParkingOverPriceDaily = 60;
+
+
 struct parkingSlot {
     vector<string> id;
     vector<int> size;
@@ -142,6 +148,8 @@ double FindIntInVector(vector<int> vec , int num){
             return i;
         }
     }
+    // vec = backup;
+
     return -1;
 }
 void requestSpot(const string &input, const parkingSlot &parking, const car &car, const price &price) {
@@ -163,7 +171,7 @@ void requestSpot(const string &input, const parkingSlot &parking, const car &car
 
     for (const auto &item : parkingData) {
         int idx = item.second;
-        cout << parking.id[idx] << " : " << parking.type[idx] << " ";
+        cout << parking.id[idx] << ": " << parking.type[idx] << " ";
         if (parking.type[idx] == Covered) {
             cout << price.staticPrice[priceIndex] + coveredParkingOverPriceConst << " "
                  << price.pricePerDay[priceIndex] + coveredParkingOverPriceDaily << endl;
@@ -222,7 +230,7 @@ void checkout (string input , parkingSlot &parking , price pricelist , int now){
         if(parking.free[index] == false){
         parking.free[index] = true;
         cout << "Spot " <<parking.id[index] << " is free now.\n"
-         <<"Total cost : " << costCalculator(parking , pricelist , now , index) << endl;
+         <<"Total cost: " << costCalculator(parking , pricelist , now , index) << endl;
     }
     else{
         cout << "Spot " <<parking.id[index] << " wasn't occupied.\n";
